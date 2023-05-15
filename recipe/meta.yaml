@@ -10,14 +10,15 @@ source:
   sha256: a17283b62470306d77060b200f13f9749c807dd15613c113d36f8d057f5c7019
 
 build:
-  noarch: python
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-build-isolation -vvv
 
 requirements:
   host:
     - python
     - pip
+    - setuptools
+    - wheel
   run:
     - python
     - plotly
@@ -26,16 +27,25 @@ requirements:
     - six
 
 test:
+  requires:
+    - pip
   imports:
     - chart_studio
+  commands:
+    - pip check
 
 about:
   home: https://github.com/plotly/plotly.py
   license: MIT
   license_family: MIT
   license_file: LICENSE.txt
+  description: |
+    Utilities for interfacing with plotly's Chart Studio. Prior to plotly.py version 4, 
+    this functionality was included in the plotly package under the plotly.plotly module. 
+    As part of plotly.py version 4, the Chart Studio functionality was removed from the 
+    plotly package and released in this chart-studio package.
   summary: This package contains utilities for interfacing with Plotly's Chart Studio service
-  doc_url: https://help.plot.ly/tutorials/#fundamentals
+  doc_url: https://plotly.com/python/chart-studio/
   dev_url: https://github.com/plotly/plotly.py/tree/master/packages/python/chart-studio
 
 extra:
